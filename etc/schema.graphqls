@@ -1,13 +1,20 @@
 type Query {
     storePickupLocations : PickupLocations @resolver(class: "MageSuite\\StoreLocatorGraphQl\\Model\\Resolver\\PickupLocations") @doc(description: "This query returns all available store pickup locations")
+    addressLocation (query: String, country: String): GeoLocation @resolver(class: "MageSuite\\StoreLocatorGraphQl\\Model\\Resolver\\AddressLocation") @doc(description: "This query returns all available store pickup locations")
+    addressAutocomplete (query: String, country: String): Places @resolver(class: "MageSuite\\StoreLocatorGraphQl\\Model\\Resolver\\AddressAutocomplete") @doc(description: "This query returns all available store pickup locations")
 }
+
 
 type PickupLocations @doc(description: "Store pickup locations") {
     items: [PickupLocation] @doc(description: "An array of store pickup locations")
 }
 
+type Places @doc(description: "Store pickup locations") {
+    items: [Place] @doc(description: "An array of store pickup locations")
+}
+
 type PickupLocation @doc(description: "PickupLocation defines all informations related to pickup location") {
-    name: Float @doc(description: "Name")
+    name: String @doc(description: "Name")
     contactName: Float @doc(description: "Contact name")
     latitude: Float @doc(description: "Latitude")
     longitude: Float @doc(description: "Longitude")
@@ -17,4 +24,13 @@ type PickupLocation @doc(description: "PickupLocation defines all informations r
     description: String @doc(description: "Description")
     postCode: String @doc(description: "Post code")
     countryId: String @doc(description: "Country identifier")
+}
+
+type GeoLocation @doc(description: "GeoLocation object") {
+    latitude: Float @doc(description: "Latitude")
+    longitude: Float @doc(description: "Longitude")
+}
+
+type Place {
+    description: String @doc(description: "description")
 }
