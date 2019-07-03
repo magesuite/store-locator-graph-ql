@@ -10,33 +10,18 @@ namespace MageSuite\StoreLocatorGraphQl\Model\Resolver;
 class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
     /**
-     * @var \Magento\InventorySalesApi\Api\StockResolverInterface
+     * @var \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel
      */
-    private $stockResolver;
+    protected $getPickupLocationsAssignedToSalesChannel;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToStockOrderedByPriority
-     */
-    private $getPickupLocationsAssignedToStockOrderedByPriority;
-
-    /**
-     * @param \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToStockOrderedByPriority $getPickupLocationsAssignedToStockOrderedByPriority
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver
-     */
     public function __construct(
-        \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToStockOrderedByPriority $getPickupLocationsAssignedToStockOrderedByPriority,
+        \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel $getPickupLocationsAssignedToSalesChannel,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver
     ) {
-        $this->getPickupLocationsAssignedToStockOrderedByPriority = $getPickupLocationsAssignedToStockOrderedByPriority;
         $this->storeManager = $storeManager;
         $this->stockResolver = $stockResolver;
+        $this->getPickupLocationsAssignedToSalesChannel = $getPickupLocationsAssignedToSalesChannel;
     }
 
     /**
@@ -50,9 +35,7 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
         array $args = null
     ) {
         $website = $this->storeManager->getWebsite();
-        $stock = $this->stockResolver->execute(\Magento\InventorySalesApi\Api\Data\SalesChannelInterface::TYPE_WEBSITE, $website->getCode());
-
-        $pickupLocations = $this->getPickupLocationsAssignedToStockOrderedByPriority->execute($stock->getStockId());
+        $pickupLocations = $this->getPickupLocationsAssignedToSalesChannel->execute('website', $website->getCode());
 
         $items = [];
 

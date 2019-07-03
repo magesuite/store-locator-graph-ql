@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magesuite" translate="label" sortOrder="300">
+            <label>MageSuite</label>
+        </tab>
+        <section id="store_locator" translate="label" type="text" sortOrder="200" showInDefault="1">
+            <label>Store Locator</label>
+            <tab>magesuite</tab>
+            <resource>MageSuite_StoreLocatorGraphQl::config</resource>
+            <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1">
+                <label>Configuration</label>
+                <field id="country_id" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Narrow results to country</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <frontend_class>countries</frontend_class>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>When selected, results from Google Maps API will be narrowed only to selected country to improve autocomplete/address search accuracy.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
