@@ -4,11 +4,11 @@
         <tab id="magesuite" translate="label" sortOrder="300">
             <label>MageSuite</label>
         </tab>
-        <section id="store_locator" translate="label" type="text" sortOrder="200" showInDefault="1">
+        <section id="store_locator" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Store Locator</label>
             <tab>magesuite</tab>
             <resource>MageSuite_StoreLocatorGraphQl::config</resource>
-            <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1">
+            <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Configuration</label>
                 <field id="country_id" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Narrow results to country</label>

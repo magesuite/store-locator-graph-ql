@@ -71,7 +71,7 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
             return $args['country'];
         }
 
-        $country = $this->scopeConfig->getValue('store_locator/configuration/country_id');
+        $country = $this->scopeConfig->getValue('store_locator/configuration/country_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 
         return $country;
     }
