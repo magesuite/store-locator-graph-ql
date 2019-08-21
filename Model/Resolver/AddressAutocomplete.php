@@ -8,19 +8,18 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
      * @var \MageSuite\GoogleApi\Service\PlaceAutocompleteResolver
      */
     protected $placeAutocompleteResolver;
-
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var \MageSuite\StoreLocatorGraphQl\Service\CountryResolver
      */
-    protected $scopeConfig;
+    protected $countryResolver;
 
     public function __construct(
         \MageSuite\GoogleApi\Service\PlaceAutocompleteResolver $placeAutocompleteResolver,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \MageSuite\StoreLocatorGraphQl\Service\CountryResolver $countryResolver
     )
     {
         $this->placeAutocompleteResolver = $placeAutocompleteResolver;
-        $this->scopeConfig = $scopeConfig;
+        $this->countryResolver = $countryResolver;
     }
 
     /**
@@ -34,12 +33,12 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
         array $args = null
     ) {
         $address = $args['query'];
-        $country = $this->resolveCountry($args);
+        $countries = $this->countryResolver->resolveCountry($args);
 
         $params = ['input' => $address];
 
-        if(isset($country)) {
-            $params['components'] = sprintf('country:%s', $country);
+        if(isset($countries)) {
+            $params['components'] = $countries;
         }
 
         $result = $this->placeAutocompleteResolver->execute($params);
@@ -63,16 +62,5 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
         }
 
         return ['items' => []];
-    }
-
-    public function resolveCountry(array $args)
-    {
-        if(isset($args['country'])) {
-            return $args['country'];
-        }
-
-        $country = $this->scopeConfig->getValue('store_locator/configuration/country_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-
-        return $country;
     }
 }
