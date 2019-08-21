@@ -8,19 +8,18 @@ class AddressLocation implements \Magento\Framework\GraphQl\Query\ResolverInterf
      * @var \MageSuite\GoogleApi\Service\GeoLocationResolver
      */
     protected $geoLocationResolver;
-
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var \MageSuite\StoreLocatorGraphQl\Service\CountryResolver
      */
-    protected $scopeConfig;
+    protected $countryResolver;
 
     public function __construct(
         \MageSuite\GoogleApi\Service\GeoLocationResolver $geoLocationResolver,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \MageSuite\StoreLocatorGraphQl\Service\CountryResolver $countryResolver
     )
     {
         $this->geoLocationResolver = $geoLocationResolver;
-        $this->scopeConfig = $scopeConfig;
+        $this->countryResolver = $countryResolver;
     }
 
     /**
@@ -34,12 +33,12 @@ class AddressLocation implements \Magento\Framework\GraphQl\Query\ResolverInterf
         array $args = null
     ) {
         $address = $args['query'];
-        $country = $this->resolveCountry($args);
+        $countries = $this->countryResolver->resolveCountry($args);
 
         $params = ['address' => $address];
 
-        if(isset($country)) {
-            $params['components'] = sprintf('country:%s', $country);
+        if(isset($countries)) {
+            $params['components'] = $countries;
         }
 
         $result = $this->geoLocationResolver->execute($params);
@@ -65,16 +64,5 @@ class AddressLocation implements \Magento\Framework\GraphQl\Query\ResolverInterf
             'latitude' => null,
             'longitude' => null
         ];
-    }
-
-    public function resolveCountry(array $args)
-    {
-        if(isset($args['country'])) {
-            return $args['country'];
-        }
-
-        $country = $this->scopeConfig->getValue('store_locator/configuration/country_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-
-        return $country;
     }
 }

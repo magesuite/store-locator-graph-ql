@@ -10,7 +10,7 @@
             <resource>MageSuite_StoreLocatorGraphQl::config</resource>
             <group id="configuration" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Configuration</label>
-                <field id="country_id" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="country_id" translate="label" type="multiselect" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Narrow results to country</label>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                     <frontend_class>countries</frontend_class>
