@@ -24,6 +24,10 @@ type PickupLocation @doc(description: "PickupLocation defines all informations r
     description: String @doc(description: "Description")
     postCode: String @doc(description: "Post code")
     countryId: String @doc(description: "Country identifier")
+    email: String @doc(description: "E-Mail address")
+    phone: String @doc(description: "Phone number")
+    fax: String @doc(description: "Fax")
+    url: String @doc(description: "URL")
 }
 
 type GeoLocation @doc(description: "GeoLocation object") {
