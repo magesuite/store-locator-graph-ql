@@ -17,6 +17,11 @@
                     <can_be_empty>1</can_be_empty>
                     <comment>When selected, results from Google Maps API will be narrowed only to selected country to improve autocomplete/address search accuracy.</comment>
                 </field>
+                <field id="stock_id" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store locations source</label>
+                    <source_model>MageSuite\StoreLocatorGraphQl\Model\Config\Source\Stock</source_model>
+                    <comment>Select stock that will be used as source for store locations.</comment>
+                </field>
             </group>
         </section>
     </system>

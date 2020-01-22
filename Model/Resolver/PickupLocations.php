@@ -10,18 +10,43 @@ namespace MageSuite\StoreLocatorGraphQl\Model\Resolver;
 class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
     /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var \Magento\InventorySalesApi\Api\StockResolverInterface
+     */
+    protected $stockResolver;
+
+    /**
      * @var \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel
      */
     protected $getPickupLocationsAssignedToSalesChannel;
 
+    /**
+     * @var \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId
+     */
+    protected $getPickupLocationsByStockId;
+
+    /**
+     * @var \MageSuite\StoreLocatorGraphQl\Helper\Configuration
+     */
+    protected $configuration;
+
     public function __construct(
         \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel $getPickupLocationsAssignedToSalesChannel,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver
+        \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver,
+        \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId,
+        \MageSuite\StoreLocatorGraphQl\Helper\Configuration $configuration
     ) {
+
         $this->storeManager = $storeManager;
         $this->stockResolver = $stockResolver;
         $this->getPickupLocationsAssignedToSalesChannel = $getPickupLocationsAssignedToSalesChannel;
+        $this->getPickupLocationsByStockId = $getPickupLocationsByStockId;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -34,17 +59,23 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
         array $value = null,
         array $args = null
     ) {
-        $website = $this->storeManager->getWebsite();
-        $pickupLocations = $this->getPickupLocationsAssignedToSalesChannel->execute('website', $website->getCode());
+
+        $stockId = $this->configuration->getStoreLocationsSource();
+        if (empty($stockId)) {
+            $website = $this->storeManager->getWebsite();
+            $pickupLocations = $this->getPickupLocationsAssignedToSalesChannel->execute('website', $website->getCode());
+        } else {
+            $pickupLocations = $this->getPickupLocationsByStockId->execute($stockId);
+        }
 
         $items = [];
 
-        if(empty($pickupLocations)) {
+        if (empty($pickupLocations)) {
             return ['items' => $items];
         }
 
         /** @var \Magento\InventoryInStorePickup\Model\PickupLocation $pickupLocation */
-        foreach($pickupLocations as $pickupLocation) {
+        foreach ($pickupLocations as $pickupLocation) {
             $items[] = [
                 'name' => $pickupLocation->getName(),
                 'contactName' => $pickupLocation->getContactName(),
