@@ -20,11 +20,6 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
     protected $stockResolver;
 
     /**
-     * @var \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel
-     */
-    protected $getPickupLocationsAssignedToSalesChannel;
-
-    /**
      * @var \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId
      */
     protected $getPickupLocationsByStockId;
@@ -35,7 +30,6 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
     protected $configuration;
 
     public function __construct(
-        \Magento\InventoryInStorePickup\Model\GetPickupLocationsAssignedToSalesChannel $getPickupLocationsAssignedToSalesChannel,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver,
         \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId,
@@ -44,7 +38,6 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
 
         $this->storeManager = $storeManager;
         $this->stockResolver = $stockResolver;
-        $this->getPickupLocationsAssignedToSalesChannel = $getPickupLocationsAssignedToSalesChannel;
         $this->getPickupLocationsByStockId = $getPickupLocationsByStockId;
         $this->configuration = $configuration;
     }
@@ -59,14 +52,15 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
         array $value = null,
         array $args = null
     ) {
+        $website = $this->storeManager->getWebsite();
 
-        $stockId = $this->configuration->getStoreLocationsSource();
-        if (empty($stockId)) {
-            $website = $this->storeManager->getWebsite();
-            $pickupLocations = $this->getPickupLocationsAssignedToSalesChannel->execute('website', $website->getCode());
-        } else {
-            $pickupLocations = $this->getPickupLocationsByStockId->execute($stockId);
-        }
+        $stockIdFromConfiguration = $this->configuration->getStoreLocationsSource();
+
+        $stockId = $stockIdFromConfiguration ?
+            $stockIdFromConfiguration :
+            $this->stockResolver->execute('website', $website->getCode())->getStockId();
+
+        $pickupLocations = $this->getPickupLocationsByStockId->execute($stockId);
 
         $items = [];
 
