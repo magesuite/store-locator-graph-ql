@@ -9,7 +9,7 @@ class GetPickupLocationsByStockId
     protected $getSourcesAssignedToStockOrderedByPriority;
 
     /**
-     * @var \Magento\InventoryInStorePickupApi\Api\MapperInterface
+     * @var \Magento\InventoryInStorePickupApi\Model\Mapper
      */
     protected $mapper;
 
@@ -20,7 +20,7 @@ class GetPickupLocationsByStockId
 
     public function __construct(
         \Magento\InventoryApi\Api\GetSourcesAssignedToStockOrderedByPriorityInterface $getSourcesAssignedToStockOrderedByPriority,
-        \Magento\InventoryInStorePickupApi\Api\MapperInterface $mapper,
+        \Magento\InventoryInStorePickupApi\Model\Mapper $mapper,
         \Magento\InventoryInStorePickup\Model\Source\GetIsPickupLocationActive $getIsPickupLocationActive
     ) {
 
