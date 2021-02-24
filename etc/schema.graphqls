@@ -21,6 +21,7 @@ type PickupLocation @doc(description: "PickupLocation defines all informations r
     sourceCode: String @doc(description: "Source code")
     city: String @doc(description: "City")
     street: String @doc(description: "Street")
+    region: String @doc(description: "Region")
     description: String @doc(description: "Description")
     postCode: String @doc(description: "Post code")
     countryId: String @doc(description: "Country identifier")
