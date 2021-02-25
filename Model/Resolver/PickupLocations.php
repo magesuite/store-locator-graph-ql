@@ -78,6 +78,7 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
                 'sourceCode' => $pickupLocation->getSourceCode(),
                 'city' => $pickupLocation->getCity(),
                 'street' => $pickupLocation->getStreet(),
+                'region' => $pickupLocation->getRegion(),
                 'description' => $pickupLocation->getDescription(),
                 'postCode' => $pickupLocation->getPostcode(),
                 'countryId' => $pickupLocation->getCountryId(),
