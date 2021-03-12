@@ -6,7 +6,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="MageSuite_StoreLocatorGraphQl::config" title="Store Locator"/>
+                            <resource id="MageSuite_StoreLocatorGraphQl::config" title="Store Locator (GraphQL config)"/>
                         </resource>
                     </resource>
                 </resource>

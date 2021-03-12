@@ -22,6 +22,11 @@
                     <source_model>MageSuite\StoreLocatorGraphQl\Model\Config\Source\Stock</source_model>
                     <comment>Select stock that will be used as source for store locations.</comment>
                 </field>
+                <field id="availability_mode" type="select" translate="label" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Stores to show on map</label>
+                    <frontend_model>MageSuite\StoreLocatorGraphQl\Block\Adminhtml\Form\Field\AvailabilityMode</frontend_model>
+                    <source_model>MageSuite\StoreLocatorGraphQl\Model\Config\Source\AvailabilityMode</source_model>
+                </field>
             </group>
         </section>
     </system>
