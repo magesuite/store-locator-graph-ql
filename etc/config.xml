@@ -3,7 +3,7 @@
     <default>
         <store_locator>
             <configuration>
-                <availability_mode>show_all</availability_mode>
+                <availability_mode>show_enabled_only</availability_mode>
             </configuration>
         </store_locator>
     </default>
