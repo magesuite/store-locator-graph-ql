@@ -6,3 +6,8 @@ MageSuite,MageSuite
 Configuration,Configuration
 "Narrow results to country","Narrow results to country"
 "Store locations source","Store locations source"
+"Show all stores"."Show all stores"
+"Show enabled only","Show enabled only"
+"In this mode, all stores will be shown on map, regardless of their status as in store pickup dropdown.","In this mode, all stores will be shown on map, regardless of their status as in store pickup dropdown."
+"In this mode, only stores available to pickup will be shown on map.","In this mode, only stores available to pickup will be shown on map."
+"Stores to show on map","Stores to show on map"

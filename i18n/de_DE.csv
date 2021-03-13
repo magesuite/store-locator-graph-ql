@@ -1,1 +1,6 @@
 Configuration,Konfiguration
+"Show all stores"."Alle Filialen anzeigen"
+"Show enabled only","Nur die geöffneten Filialen anzeigen"
+"In this mode, all stores will be shown on map, regardless of their status as in store pickup dropdown.","Alle Filialen auf der Karte anzeigen, unabhängig ob diese eine Abholung vor Ort anbietet."
+"In this mode, only stores available to pickup will be shown on map.","Nur die Filialen auf der Karte anzeigen, die eine Abholung vor Ort anbieten."
+"Stores to show on map","Filialen auf der Karte anzeigen"
