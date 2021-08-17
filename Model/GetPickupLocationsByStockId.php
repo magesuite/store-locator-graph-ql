@@ -43,7 +43,7 @@ class GetPickupLocationsByStockId
         $this->removeAccents = $removeAccents;
     }
 
-    public function execute($stockId, string $query = ''): array
+    public function execute(int $stockId, string $query = ''): array
     {
         $query = $this->removeAccents->filter($query);
 
