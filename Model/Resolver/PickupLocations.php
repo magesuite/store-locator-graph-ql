@@ -62,7 +62,7 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
             $stockIdFromConfiguration :
             $this->stockResolver->execute('website', $website->getCode())->getStockId();
 
-        $pickupLocations = $this->getPickupLocationsByStockId->execute($stockId, $query);
+        $pickupLocations = $this->getPickupLocationsByStockId->execute((int)$stockId, $query);
 
         $items = [];
 
