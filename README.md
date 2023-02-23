@@ -1,4 +1,1 @@
-# StoreLocatorGraphQl
-
-**StoreLocatorGraphQl** provides type and resolver information for the GraphQl module
-to generate store pickup locations data
+https://creativestyle.atlassian.net/wiki/spaces/MGSDEV/pages/2359722102/StoreLocatorGraphQl+optional
