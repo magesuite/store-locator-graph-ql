@@ -72,26 +72,31 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
 
         /** @var \Magento\InventoryInStorePickup\Model\PickupLocation $pickupLocation */
         foreach ($pickupLocations as $pickupLocation) {
-            $items[] = [
-                'name' => $pickupLocation->getName(),
-                'contactName' => $pickupLocation->getContactName(),
-                'latitude' => $pickupLocation->getLatitude(),
-                'longitude' => $pickupLocation->getLongitude(),
-                'sourceCode' => $pickupLocation->getPickupLocationCode(),
-                'pickupLocationCode' => $pickupLocation->getPickupLocationCode(),
-                'city' => $pickupLocation->getCity(),
-                'street' => $pickupLocation->getStreet(),
-                'region' => $pickupLocation->getRegion(),
-                'description' => $pickupLocation->getDescription(),
-                'postCode' => $pickupLocation->getPostcode(),
-                'countryId' => $pickupLocation->getCountryId(),
-                'email' => $pickupLocation->getEmail(),
-                'phone' => $pickupLocation->getPhone(),
-                'fax' => $pickupLocation->getFax(),
-                'url' => $pickupLocation->getExtensionAttributes()->getUrl(),
-            ];
+            $items[] = $this->mapPickupLocation($pickupLocation);
         }
 
         return ['items' => $items];
+    }
+
+    public function mapPickupLocation(\Magento\InventoryInStorePickupApi\Api\Data\PickupLocationInterface $pickupLocation)
+    {
+        return [
+            'name' => $pickupLocation->getName(),
+            'contactName' => $pickupLocation->getContactName(),
+            'latitude' => $pickupLocation->getLatitude(),
+            'longitude' => $pickupLocation->getLongitude(),
+            'sourceCode' => $pickupLocation->getPickupLocationCode(),
+            'pickupLocationCode' => $pickupLocation->getPickupLocationCode(),
+            'city' => $pickupLocation->getCity(),
+            'street' => $pickupLocation->getStreet(),
+            'region' => $pickupLocation->getRegion(),
+            'description' => $pickupLocation->getDescription(),
+            'postCode' => $pickupLocation->getPostcode(),
+            'countryId' => $pickupLocation->getCountryId(),
+            'email' => $pickupLocation->getEmail(),
+            'phone' => $pickupLocation->getPhone(),
+            'fax' => $pickupLocation->getFax(),
+            'url' => $pickupLocation->getExtensionAttributes()->getUrl(),
+        ];
     }
 }
