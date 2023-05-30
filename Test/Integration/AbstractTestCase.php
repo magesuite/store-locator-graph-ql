@@ -2,7 +2,12 @@
 
 namespace MageSuite\StoreLocatorGraphQl\Test\Integration;
 
-class AbstractTestCase extends \PHPUnit\Framework\TestCase {
+class AbstractTestCase extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @var \Magento\TestFramework\ObjectManager
+     */
+    protected $objectManager;
 
     public function setUp(): void
     {
