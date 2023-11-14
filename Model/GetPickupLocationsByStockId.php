@@ -58,8 +58,8 @@ class GetPickupLocationsByStockId
     {
         if ($this->configuration->getAvailabilityMode() == \MageSuite\StoreLocatorGraphQl\Model\Config\Source\AvailabilityMode::STORES_AVAILABILITY_MODE_SHOW_ENABLED_ONLY) {
             return $this->getIsPickupLocationActive->execute($source);
-        } 
-        
+        }
+
         return true;
     }
 }
