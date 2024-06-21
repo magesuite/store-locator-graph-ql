@@ -4,20 +4,14 @@ namespace MageSuite\StoreLocatorGraphQl\Model\Resolver;
 
 class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
-    /**
-     * @var \MageSuite\GoogleApi\Service\PlaceAutocompleteResolver
-     */
-    protected $placeAutocompleteResolver;
-    /**
-     * @var \MageSuite\StoreLocatorGraphQl\Service\CountryResolver
-     */
-    protected $countryResolver;
+    protected \MageSuite\GoogleApi\Service\PlaceAutocompleteResolver $placeAutocompleteResolver;
+
+    protected \MageSuite\StoreLocatorGraphQl\Service\CountryResolver $countryResolver;
 
     public function __construct(
         \MageSuite\GoogleApi\Service\PlaceAutocompleteResolver $placeAutocompleteResolver,
         \MageSuite\StoreLocatorGraphQl\Service\CountryResolver $countryResolver
-    )
-    {
+    ) {
         $this->placeAutocompleteResolver = $placeAutocompleteResolver;
         $this->countryResolver = $countryResolver;
     }
