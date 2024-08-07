@@ -42,7 +42,7 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
         }
 
         if(!in_array($result->status,['OK', 'ZERO_RESULTS'])) {
-            throw new \Magento\Framework\Exception\LocalizedException(__($result->error_message));
+            throw new \Magento\Framework\Exception\LocalizedException(__($result->error_message ?? 'PlaceAutocomplete request failed'));
         }
 
         if(isset($result->predictions) and !empty($result->predictions)) {
