@@ -72,7 +72,7 @@ class GetPickupLocationsByStockId
      * @param $source
      * @return bool
      */
-    private function shouldSourceBeDisplayed($source)
+    protected function shouldSourceBeDisplayed($source)
     {
         if ($this->configuration->getAvailabilityMode() == \MageSuite\StoreLocatorGraphQl\Model\Config\Source\AvailabilityMode::STORES_AVAILABILITY_MODE_SHOW_ENABLED_ONLY) {
             return $this->getIsPickupLocationActive->execute($source);
@@ -81,7 +81,7 @@ class GetPickupLocationsByStockId
         return true;
     }
 
-    private function sourceMatchQuery(\Magento\InventoryApi\Api\Data\SourceInterface $source, string $query): bool
+    protected function sourceMatchQuery(\Magento\InventoryApi\Api\Data\SourceInterface $source, string $query): bool
     {
         if ($this->sourceMatchCity($source->getCity(), $query) || ($query === $source->getPostcode())) {
             return true;
@@ -90,7 +90,7 @@ class GetPickupLocationsByStockId
         return false;
     }
 
-    private function sourceMatchCity(string $cityString, string $query): bool
+    protected function sourceMatchCity(string $cityString, string $query): bool
     {
         $cityString = $this->removeAccents->filter($cityString);
 
