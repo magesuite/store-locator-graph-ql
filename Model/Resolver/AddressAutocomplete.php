@@ -23,8 +23,8 @@ class AddressAutocomplete implements \Magento\Framework\GraphQl\Query\ResolverIn
         \Magento\Framework\GraphQl\Config\Element\Field $field,
         $context,
         \Magento\Framework\GraphQl\Schema\Type\ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         $address = $args['query'];
         $countries = $this->countryResolver->resolveCountry($args);

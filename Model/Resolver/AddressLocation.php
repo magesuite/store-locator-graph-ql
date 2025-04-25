@@ -25,8 +25,8 @@ class AddressLocation implements \Magento\Framework\GraphQl\Query\ResolverInterf
         \Magento\Framework\GraphQl\Config\Element\Field $field,
         $context,
         \Magento\Framework\GraphQl\Schema\Type\ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         $address = $args['query'];
         $params = ['address' => $address];
