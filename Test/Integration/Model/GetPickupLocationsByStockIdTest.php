@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\StoreLocatorGraphQl\Test\Integration\Model;
 
 /**
@@ -7,69 +9,62 @@ namespace MageSuite\StoreLocatorGraphQl\Test\Integration\Model;
  * @magentoAppIsolation enabled
  **/
 
-class GetPickupLocationsByStockIdTest extends \MageSuite\StoreLocatorGraphQl\Test\Integration\AbstractTestCase
+class GetPickupLocationsByStockIdTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId
-     */
-    protected $getPickupLocationsByStockId;
-
+    protected \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId;
     private const STOCK_ID = 30;
-
     private const ALL_STORES_COUNT = 5;
-
     private const ENABLED_PICKUP_STORES = 3;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        parent::setUp();
-        $this->getPickupLocationsByStockId = $this->objectManager->get(\MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId::class);
+        $objectManager = \Magento\TestFramework\ObjectManager::getInstance();
+        $this->getPickupLocationsByStockId = $objectManager->get(\MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId::class);
     }
 
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_enabled_only
      */
-    public function testItReturnsEnabledPickupLocationsOnly()
+    public function testItReturnsEnabledPickupLocationsOnly(): void
     {
         $sources = $this->getPickupLocationsByStockId->execute(self::STOCK_ID);
         $this->assertEquals(self::ENABLED_PICKUP_STORES, count($sources), 'Failed to assert that only sources set as enabled pickup locations are returned.');
     }
 
-
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_all
      */
-    public function testItReturnsAllSources()
+    public function testItReturnsAllSources(): void
     {
         $sources = $this->getPickupLocationsByStockId->execute(self::STOCK_ID);
         $this->assertEquals(self::ALL_STORES_COUNT, count($sources), 'Failed to assert that all sources are returned (regardless of their pickup location status).');
     }
 
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_enabled_only
      */
-    public function testItReturnsAllEnabledSourcesForEmptyQuery()
+    public function testItReturnsAllEnabledSourcesForEmptyQuery(): void
     {
         $sources1 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID);
         $sources2 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, '');
@@ -81,16 +76,16 @@ class GetPickupLocationsByStockIdTest extends \MageSuite\StoreLocatorGraphQl\Tes
     }
 
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_enabled_only
      */
-    public function testItReturnsSourcesForQueryWhichRelatesToCity()
+    public function testItReturnsSourcesForQueryWhichRelatesToCity(): void
     {
         $sources1 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'city');
         $sources2 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'CITY');
@@ -108,16 +103,16 @@ class GetPickupLocationsByStockIdTest extends \MageSuite\StoreLocatorGraphQl\Tes
     }
 
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_enabled_only
      */
-    public function testItReturnsSourcesForQueryWhichRelatesToPostcode()
+    public function testItReturnsSourcesForQueryWhichRelatesToPostcode(): void
     {
         $sources1 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'postcode-3');
         $sources2 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'POSTCODE-3');
@@ -131,16 +126,16 @@ class GetPickupLocationsByStockIdTest extends \MageSuite\StoreLocatorGraphQl\Tes
     }
 
     /**
-     * @magentoDataFixture loadSourcesFixture
-     * @magentoDataFixture loadStocksFixture
-     * @magentoDataFixture loadStockSourceLinksFixture
-     * @magentoDataFixture loadSourceItemsFixture
-     * @magentoDataFixture loadWebsiteWithStoresFixture
-     * @magentoDataFixture loadStockWebsiteSalesChannelsFixture
-     * @magentoDataFixture loadReindexInventoryFixture
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/sources.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stocks.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/stock_source_links.php
+     * @magentoDataFixture Magento_InventoryApi::Test/_files/source_items.php
+     * @magentoDataFixture MageSuite_StoreLocatorGraphQl::Test/Integration/_files/websites_with_stores.php
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/stock_website_sales_channels.php
+     * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_enabled_only
      */
-    public function testItReturnsSourcesForQueryWithAccentsWhichRelatesToCity()
+    public function testItReturnsSourcesForQueryWithAccentsWhichRelatesToCity(): void
     {
         $sources1 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'Königsbrück');
         $sources2 = $this->getPickupLocationsByStockId->execute(self::STOCK_ID, 'Konigsbruck');
