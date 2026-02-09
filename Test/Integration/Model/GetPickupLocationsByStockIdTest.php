@@ -11,10 +11,11 @@ namespace MageSuite\StoreLocatorGraphQl\Test\Integration\Model;
 
 class GetPickupLocationsByStockIdTest extends \PHPUnit\Framework\TestCase
 {
-    protected \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId;
-    private const STOCK_ID = 30;
-    private const ALL_STORES_COUNT = 5;
-    private const ENABLED_PICKUP_STORES = 3;
+    protected const STOCK_ID = 30;
+    protected const ALL_STORES_COUNT = 5;
+    protected const ENABLED_PICKUP_STORES = 3;
+
+    protected ?\MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId;
 
     protected function setUp(): void
     {
