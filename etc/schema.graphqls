@@ -15,7 +15,7 @@ type Places @doc(description: "Store pickup locations") {
 
 type PickupLocation @doc(description: "PickupLocation defines all informations related to pickup location") {
     name: String @doc(description: "Name")
-    contactName: Float @doc(description: "Contact name")
+    contactName: String @doc(description: "Contact name")
     latitude: Float @doc(description: "Latitude")
     longitude: Float @doc(description: "Longitude")
     sourceCode: String @doc(description: "Pickup Location Code")
