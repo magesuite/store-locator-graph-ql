@@ -28,7 +28,7 @@ class AddressLocation implements \Magento\Framework\GraphQl\Query\ResolverInterf
         ?array $value = null,
         ?array $args = null
     ) {
-        $address = $args['query'];
+        $address = $query = $args['query'] ?? '';;
         $params = ['address' => $address];
 
         $countries = $this->countryResolver->resolveCountry($args);
