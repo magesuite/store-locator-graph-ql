@@ -29,17 +29,24 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
      */
     protected $configuration;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\InventorySalesApi\Api\StockResolverInterface $stockResolver,
         \MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId,
-        \MageSuite\StoreLocatorGraphQl\Helper\Configuration $configuration
+        \MageSuite\StoreLocatorGraphQl\Helper\Configuration $configuration,
+        \Psr\Log\LoggerInterface $logger
     ) {
 
         $this->storeManager = $storeManager;
         $this->stockResolver = $stockResolver;
         $this->getPickupLocationsByStockId = $getPickupLocationsByStockId;
         $this->configuration = $configuration;
+        $this->logger = $logger;
     }
 
     /**
@@ -72,6 +79,16 @@ class PickupLocations implements \Magento\Framework\GraphQl\Query\ResolverInterf
 
         /** @var \Magento\InventoryInStorePickup\Model\PickupLocation $pickupLocation */
         foreach ($pickupLocations as $pickupLocation) {
+            if ($pickupLocation->getLatitude() === null || $pickupLocation->getLongitude() === null) {
+                $this->logger->warning(
+                    sprintf(
+                        'Pickup location "%s" skipped: missing latitude or longitude.',
+                        $pickupLocation->getPickupLocationCode()
+                    )
+                );
+                continue;
+            }
+
             $items[] = $this->mapPickupLocation($pickupLocation);
         }
 
