@@ -3,6 +3,7 @@
     <module name="MageSuite_StoreLocatorGraphQl" >
         <sequence>
             <module name="Magento_InventoryInStorePickup"/>
+            <module name="Magento_GraphQlResolverCache"/>
         </sequence>
     </module>
 </config>

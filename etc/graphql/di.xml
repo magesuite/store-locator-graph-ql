@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\GraphQlResolverCache\Model\Resolver\Result\ResolverIdentityClassProvider">
+        <arguments>
+            <argument name="cacheableResolverClassNameIdentityMap" xsi:type="array">
+                <item name="MageSuite\StoreLocatorGraphQl\Model\Resolver\PickupLocations" xsi:type="string">MageSuite\StoreLocatorGraphQl\Model\Resolver\PickupLocations\Identity</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\GraphQlResolverCache\Model\Resolver\Result\CacheKey\Calculator\Provider">
+        <arguments>
+            <argument name="factorProviders" xsi:type="array">
+                <item name="MageSuite\StoreLocatorGraphQl\Model\Resolver\PickupLocations" xsi:type="array">
+                    <item name="store" xsi:type="string">Magento\StoreGraphQl\Model\Resolver\CacheKey\FactorProvider\Store</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

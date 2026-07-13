@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\InventoryApi\Api\SourceRepositoryInterface">
+        <plugin name="lush_pickup_locations_cache"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\Magento\InventoryApi\SourceRepository\FlushPickupLocationsCache"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\GraphQlResolverCache\Model\Resolver\Result\TagResolver">
+        <arguments>
+            <argument name="invalidatableObjectTypes" xsi:type="array">
+                <item name="MageSuite\StoreLocatorGraphQl\Model\Cache\PickupLocationsCacheContext" xsi:type="string">MageSuite\StoreLocatorGraphQl\Model\Cache\PickupLocationsCacheContext</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\InventoryApi\Api\StockSourceLinksSaveInterface">
+        <plugin name="flush_pickup_locations_cache_on_stock_source_link_save"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\Magento\InventoryApi\StockSourceLinksSave\FlushPickupLocationsCache"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\InventoryApi\Api\StockSourceLinksDeleteInterface">
+        <plugin name="flush_pickup_locations_cache_on_stock_source_link_delete"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\Magento\InventoryApi\StockSourceLinksDelete\FlushPickupLocationsCache"
+                sortOrder="10"/>
+    </type>
+    <type name="MageSuite\StoreLocator\Model\Import\Source">
+        <plugin name="flush_pickup_locations_cache_after_import"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\MageSuite\StoreLocator\Import\Source\FlushPickupLocationsCacheAfterImport"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\InventorySalesApi\Model\ReplaceSalesChannelsForStockInterface">
+        <plugin name="flush_pickup_locations_cache_on_stock_sales_channels_replace"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\Magento\InventorySalesApi\Model\ReplaceSalesChannelsForStock\FlushPickupLocationsCache"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\InventoryApi\Api\StockRepositoryInterface">
+        <plugin name="flush_pickup_locations_cache_on_stock_delete"
+                type="MageSuite\StoreLocatorGraphQl\Plugin\Magento\InventoryApi\StockRepository\FlushPickupLocationsCacheOnDelete"
+                sortOrder="10"/>
+    </type>
+</config>
