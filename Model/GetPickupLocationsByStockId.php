@@ -51,6 +51,10 @@ class GetPickupLocationsByStockId
 
         $result = [];
         foreach ($sources as $source) {
+            if (!$source->isEnabled()) {
+                continue;
+            }
+
             if (!$this->shouldSourceBeDisplayed($source)) {
                 continue;
             }

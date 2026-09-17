@@ -12,8 +12,9 @@ namespace MageSuite\StoreLocatorGraphQl\Test\Integration\Model;
 class GetPickupLocationsByStockIdTest extends \PHPUnit\Framework\TestCase
 {
     protected const STOCK_ID = 30;
-    protected const ALL_STORES_COUNT = 5;
+    protected const ENABLED_STORES_COUNT = 4;
     protected const ENABLED_PICKUP_STORES = 3;
+    protected const DISABLED_SOURCE_CODE = 'eu-disabled';
 
     protected ?\MageSuite\StoreLocatorGraphQl\Model\GetPickupLocationsByStockId $getPickupLocationsByStockId;
 
@@ -49,10 +50,16 @@ class GetPickupLocationsByStockIdTest extends \PHPUnit\Framework\TestCase
      * @magentoDataFixture Magento_InventoryIndexer::Test/_files/reindex_inventory.php
      * @magentoConfigFixture current_store store_locator/configuration/availability_mode show_all
      */
-    public function testItReturnsAllSources(): void
+    public function testItReturnsAllEnabledSourcesInShowAllMode(): void
     {
         $sources = $this->getPickupLocationsByStockId->execute(self::STOCK_ID);
-        $this->assertEquals(self::ALL_STORES_COUNT, count($sources), 'Failed to assert that all sources are returned (regardless of their pickup location status).');
+        $this->assertEquals(self::ENABLED_STORES_COUNT, count($sources), 'Failed to assert that all enabled sources are returned (regardless of their pickup location status).');
+
+        $sourceCodes = array_map(
+            fn (\Magento\InventoryInStorePickupApi\Api\Data\PickupLocationInterface $pickupLocation) => $pickupLocation->getPickupLocationCode(),
+            $sources
+        );
+        $this->assertNotContains(self::DISABLED_SOURCE_CODE, $sourceCodes, 'Failed to assert that a disabled source is not returned.');
     }
 
     /**
