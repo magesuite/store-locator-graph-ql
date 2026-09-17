@@ -11,7 +11,7 @@ class FlushPickupLocationsCacheAfterImport
     ) {
     }
 
-    public function afterImportData(\MageSuite\StoreLocator\Model\Import\Source $subject, bool $result): bool 
+    public function afterImportData(\MageSuite\StoreLocator\Model\Import\Source $subject, bool $result): bool
     {
         $this->cacheContext->flush();
 
